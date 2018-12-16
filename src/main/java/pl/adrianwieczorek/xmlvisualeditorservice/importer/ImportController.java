@@ -1,10 +1,19 @@
 package pl.adrianwieczorek.xmlvisualeditorservice.importer;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import pl.adrianwieczorek.xmlvisualeditorservice.contants.ApiRestConstants;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import pl.adrianwieczorek.xmlvisualeditorservice.contant.RestAPIConstants;
+import pl.adrianwieczorek.xmlvisualeditorservice.dto.ImportDTO;
 
 @RestController
-@RequestMapping(ApiRestConstants.IMPORT)
+@RequestMapping(RestAPIConstants.IMPORT)
 public class ImportController {
+
+  @Autowired
+  private ImportXmlService importXmlService;
+
+  @PostMapping
+  public ImportDTO importer(@RequestBody String xml){
+    return importXmlService.importXML(xml);
+  }
 }
