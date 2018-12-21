@@ -6,7 +6,7 @@ import org.w3c.dom.*;
 import pl.adrianwieczorek.xmlvisualeditorservice.dto.XmlNodeDTO;
 import pl.adrianwieczorek.xmlvisualeditorservice.util.XmlHelper;
 
-import java.util.Date;
+import java.util.Random;
 
 @Slf4j
 public class InputXMLParser {
@@ -21,7 +21,8 @@ public class InputXMLParser {
   }
 
   private XmlNodeDTO getNode(XmlNodeDTO xmlNodeDTO, Element e) {
-    xmlNodeDTO.setId(new Date().getTime()); // identify id
+    Random random = new Random();
+    xmlNodeDTO.setId(random.nextLong());
     xmlNodeDTO.setName(e.getTagName());
     fillParameters(xmlNodeDTO, e);
 
