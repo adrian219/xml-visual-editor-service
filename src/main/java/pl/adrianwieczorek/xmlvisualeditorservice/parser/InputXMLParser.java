@@ -31,7 +31,7 @@ public class InputXMLParser {
       if (n.getNodeType() == Node.ELEMENT_NODE) {
         xmlNodeDTO.getChildren().add(getNode(new XmlNodeDTO(), (Element) n));
       }else{
-        xmlNodeDTO.setContent(e.getTextContent());
+        xmlNodeDTO.setContent(e.getTextContent().trim());
       }
     }
 
@@ -42,7 +42,8 @@ public class InputXMLParser {
     NamedNodeMap attributes = e.getAttributes();
     for (Integer i = 0; i < attributes.getLength(); i++) {
       Node attr = attributes.item(i);
-      xmlNodeDTO.getParams().put(attr.getNodeName(), attr.getNodeValue());
+      xmlNodeDTO.getParamKeys().add(attr.getNodeName());
+      xmlNodeDTO.getParamValues().add(attr.getNodeValue());
     }
   }
 }

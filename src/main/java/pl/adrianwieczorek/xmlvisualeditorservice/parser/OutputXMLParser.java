@@ -52,19 +52,19 @@ public class OutputXMLParser {
   private String getStringParams(XmlNodeDTO xmlNodeDTO) {
     StringBuilder sb = new StringBuilder();
 
-    if (xmlNodeDTO.getParams() != null && !xmlNodeDTO.getParams().isEmpty()) {
+    if (xmlNodeDTO.getParamKeys() != null && !xmlNodeDTO.getParamValues().isEmpty()) {
       sb
               .append(" ");
 
-      xmlNodeDTO.getParams().forEach((k, v) -> {
+      for(int i = 0; i<xmlNodeDTO.getParamKeys().size(); i++){
         sb
-                .append(k)
+                .append(xmlNodeDTO.getParamKeys().get(i))
                 .append("=")
                 .append("\"")
-                .append(v)
+                .append(xmlNodeDTO.getParamValues().get(i))
                 .append("\"")
                 .append(" ");
-      });
+      }
     }
 
     return sb.toString();
