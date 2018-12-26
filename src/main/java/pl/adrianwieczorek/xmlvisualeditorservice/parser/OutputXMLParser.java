@@ -33,17 +33,21 @@ public class OutputXMLParser {
     } else {
       sb
               .append(">");
-    }
 
-    if (xmlNodeDTO.getChildren() != null && !xmlNodeDTO.getChildren().isEmpty()) {
-      xmlNodeDTO.getChildren().forEach(node -> buildNode(sb, node));
+      if (xmlNodeDTO.getChildren() != null && !xmlNodeDTO.getChildren().isEmpty()) {
+        xmlNodeDTO.getChildren().forEach(node -> {
+          StringBuilder childrenSb = new StringBuilder();
+          sb.append(buildNode(childrenSb, node));
+        });
+      } else if (!Strings.isNullOrEmpty(xmlNodeDTO.getContent()) && !xmlNodeDTO.getContent().equals("null") && !xmlNodeDTO.getContent().equals("undefined")) { //todo ladniej napisac
+        sb
+                .append(xmlNodeDTO.getContent());
+      }
+
       sb
               .append("</")
               .append(xmlNodeDTO.getName())
               .append(">");
-    } else if (!Strings.isNullOrEmpty(xmlNodeDTO.getContent())) {
-      sb
-              .append(xmlNodeDTO.getContent());
     }
 
     return sb.toString();

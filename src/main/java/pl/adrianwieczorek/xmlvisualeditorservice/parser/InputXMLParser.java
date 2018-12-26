@@ -31,7 +31,7 @@ public class InputXMLParser {
       Node n = children.item(i);
       if (n.getNodeType() == Node.ELEMENT_NODE) {
         xmlNodeDTO.getChildren().add(getNode(new XmlNodeDTO(), (Element) n));
-      }else{
+      } else {
         xmlNodeDTO.setContent(e.getTextContent().trim());
       }
     }
