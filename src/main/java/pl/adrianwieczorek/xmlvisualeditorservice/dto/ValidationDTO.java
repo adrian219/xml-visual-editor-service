@@ -6,4 +6,5 @@ import lombok.Data;
 public class ValidationDTO {
   private String xml;
   private Boolean validate;
+  private String errorMessage;
 }

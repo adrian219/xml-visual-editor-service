@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+import pl.adrianwieczorek.xmlvisualeditorservice.validation.ValidationException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,10 +26,12 @@ public class XmlHelper {
       DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
       InputSource is = new InputSource(new StringReader(xml));
       return docBuilder.parse(is);
+    }  catch(SAXParseException e) {
+      throw new ValidationException(String.format("Line number: %s, Column number: %s, Message from server: %s", e.getColumnNumber(), e.getLineNumber(), e.getLocalizedMessage()));
     } catch (ParserConfigurationException | IOException | SAXException e) {
       log.error("Cannot parse XML from string [xml={}]", xml);
       log.error(e.getMessage());
-      return null;
+      throw new ValidationException(e.toString());
     }
   }
 

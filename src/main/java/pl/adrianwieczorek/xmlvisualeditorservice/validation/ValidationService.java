@@ -16,7 +16,17 @@ public class ValidationService {
     log.info("VALIDATE XML: {}", xml);
     ValidationDTO validationDTO = new ValidationDTO();
     validationDTO.setXml(xml);
-    validationDTO.setValidate(validatorXml.check(validationDTO.getXml()));
+    Boolean check;
+
+    //checking validation
+    try {
+      check = validatorXml.check(validationDTO.getXml());
+    }catch(ValidationException e) {
+      validationDTO.setErrorMessage(e.getMessage());
+      check = false;
+    }
+
+    validationDTO.setValidate(check);
 
     log.info("VALIDATED XML: {} ==> {}", validationDTO.getXml(), validationDTO.getValidate());
 

@@ -10,6 +10,7 @@ import pl.adrianwieczorek.xmlvisualeditorservice.parser.OutputXMLParser;
 @Slf4j
 @Service
 public class ExportXmlService {
+  private static final Integer PRETTY_STRING_FACTOR = 4;
 
   @Autowired
   private OutputXMLParser outputXMLParser;
@@ -18,7 +19,7 @@ public class ExportXmlService {
     log.info("EXPORT XML [xmlNodeDTO={}]", xmlNodeDTO.toString());
 
     ExportDTO exportDTO = new ExportDTO();
-    exportDTO.setXml(outputXMLParser.format(outputXMLParser.toXML(xmlNodeDTO), 4));
+    exportDTO.setXml(outputXMLParser.format(outputXMLParser.toXML(xmlNodeDTO), PRETTY_STRING_FACTOR));
 
     log.info("RESULT [xml={}]", exportDTO.getXml());
 
