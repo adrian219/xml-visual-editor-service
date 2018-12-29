@@ -23,6 +23,8 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<jjwt.version>0.9.0</jjwt.version>
+		<modelmapper.version>2.3.2</modelmapper.version>
+		<hibernate-evners.version>5.4.0.Final</hibernate-evners.version>
 	</properties>
 
 	<dependencies>
@@ -44,6 +46,7 @@
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -54,25 +57,44 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.4</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!--do usuniecia?-->
 		<dependency>
 			<groupId>com.nerdforge</groupId>
 			<artifactId>unxml</artifactId>
 			<version>0.9</version>
 		</dependency>
+
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>${jjwt.version}</version>
+		</dependency>
+
+		<!--Mapper dependencies-->
+		<dependency>
+			<groupId>org.modelmapper.extensions</groupId>
+			<artifactId>modelmapper-spring</artifactId>
+			<version>${modelmapper.version}</version>
+		</dependency>
+
+		<!-- Hibernate Envers -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-envers</artifactId>
+			<version>${hibernate-evners.version}</version>
 		</dependency>
 	</dependencies>
 

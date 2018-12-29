@@ -33,7 +33,7 @@ public class UserController {
 
   @PostMapping(RestAPIConstants.SIGN_UP)
   public User create(@RequestBody SignupDTO user) {
-    log.info(user.toString());
+    log.info("CREATE USER [{}]", user.toString());
     return userService.save(user);
   }
 

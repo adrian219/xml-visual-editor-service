@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.adrianwieczorek.xmlvisualeditorservice.contant.UserRole;
 import pl.adrianwieczorek.xmlvisualeditorservice.domain.Role;
 import pl.adrianwieczorek.xmlvisualeditorservice.domain.User;
 import pl.adrianwieczorek.xmlvisualeditorservice.dto.SignupDTO;
@@ -61,16 +62,19 @@ public class UserServiceImpl implements UserDetailsService {
     return userRepository.findById(id).get();
   }
 
-  public User save(SignupDTO signup) {
+  public User save(SignupDTO signUp) {
     User user = new User();
-    user.setUsername(signup.getUsername());
-    user.setPassword(bcryptEncoder.encode(signup.getPassword()));
-    user.setEmail(signup.getEmail());
-    user.setFirstname(signup.getFirstname());
-    user.setLastname(signup.getLastname());
+    user.setUsername(signUp.getUsername());
+    user.setPassword(bcryptEncoder.encode(signUp.getPassword()));
+    user.setEmail(signUp.getEmail());
+    user.setFirstname(signUp.getFirstName());
+    user.setLastname(signUp.getLastName());
+
+    user = userRepository.save(user);
+
     Set<Role> roles = new HashSet<>();
-    roles.add(roleRepository.findByName("USER"));
-    user.setRoles(roles); //uwzglednic role jako enumy todo
+    roles.add(roleRepository.findByName(UserRole.USER.name()));
+    user.setRoles(roles);
 
     return userRepository.save(user);
   }

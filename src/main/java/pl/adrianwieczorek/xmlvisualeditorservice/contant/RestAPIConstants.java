@@ -9,4 +9,5 @@ public interface RestAPIConstants {
   String TOKEN = "/token";
   String SIGN_UP = "/sign-up";
   String GENERATE = "/generate";
+  String OWN_XMLS = "/own-xmls";
 }

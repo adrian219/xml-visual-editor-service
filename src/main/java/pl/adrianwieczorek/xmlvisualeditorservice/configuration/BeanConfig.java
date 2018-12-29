@@ -1,10 +1,12 @@
 package pl.adrianwieczorek.xmlvisualeditorservice.configuration;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.adrianwieczorek.xmlvisualeditorservice.authentication.JwtAuthenticationFilter;
-import pl.adrianwieczorek.xmlvisualeditorservice.config.CORSFilter;
+import pl.adrianwieczorek.xmlvisualeditorservice.mapper.OwnXmlDTOMapper;
+import pl.adrianwieczorek.xmlvisualeditorservice.mapper.OwnXmlMapper;
 import pl.adrianwieczorek.xmlvisualeditorservice.parser.InputXMLParser;
 import pl.adrianwieczorek.xmlvisualeditorservice.parser.OutputXMLParser;
 import pl.adrianwieczorek.xmlvisualeditorservice.util.XmlHelper;
@@ -41,5 +43,15 @@ public class BeanConfig {
   @Bean
   public BCryptPasswordEncoder encoder() {
     return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  public ModelMapper modelMapper() {
+    ModelMapper modelMapper = new ModelMapper();
+
+    modelMapper.addMappings(new OwnXmlMapper());
+    modelMapper.addMappings(new OwnXmlDTOMapper());
+
+    return modelMapper;
   }
 }

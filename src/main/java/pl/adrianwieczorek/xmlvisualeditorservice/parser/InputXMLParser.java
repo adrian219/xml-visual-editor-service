@@ -17,6 +17,10 @@ public class InputXMLParser {
   public XmlNodeDTO toNode(String xml) {
     Document doc = xmlHelper.toDocument(xml);
 
+    if(doc == null) {
+      return new XmlNodeDTO();
+    }
+
     return getNode(new XmlNodeDTO(), doc.getDocumentElement());
   }
 

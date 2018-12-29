@@ -1,5 +1,6 @@
 package pl.adrianwieczorek.xmlvisualeditorservice.util;
 
+import com.google.common.base.Strings;
 import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
@@ -21,17 +22,22 @@ import java.io.StringWriter;
 public class XmlHelper {
 
   public Document toDocument(String xml) {
-    try {
-      DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
-      DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
-      InputSource is = new InputSource(new StringReader(xml));
-      return docBuilder.parse(is);
-    }  catch(SAXParseException e) {
-      throw new ValidationException(String.format("Line number: %s, Column number: %s, Message from server: %s", e.getColumnNumber(), e.getLineNumber(), e.getLocalizedMessage()));
-    } catch (ParserConfigurationException | IOException | SAXException e) {
-      log.error("Cannot parse XML from string [xml={}]", xml);
-      log.error(e.getMessage());
-      throw new ValidationException(e.toString());
+    if (Strings.isNullOrEmpty(xml)) {
+      log.info("Xml is empty!");
+      return null;
+    } else {
+      try {
+        DocumentBuilderFactory dbfac = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = dbfac.newDocumentBuilder();
+        InputSource is = new InputSource(new StringReader(xml));
+        return docBuilder.parse(is);
+      } catch (SAXParseException e) {
+        throw new ValidationException(String.format("Line number: %s, Column number: %s, Message from server: %s", e.getColumnNumber(), e.getLineNumber(), e.getLocalizedMessage()));
+      } catch (ParserConfigurationException | IOException | SAXException e) {
+        log.error("Cannot parse XML from string [xml={}]", xml);
+        log.error(e.getMessage());
+        throw new ValidationException(e.toString());
+      }
     }
   }
 

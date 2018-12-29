@@ -1,17 +1,19 @@
 package pl.adrianwieczorek.xmlvisualeditorservice.domain;
 
 import lombok.Data;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
 
 @Entity
-@Table
+@Audited
 @Data
-public class Role {
+public class Role extends Auditable<String> {
+  private static final long serialVersionUID = -8444697813123556689L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id;
+  private Long id;
 
   @Column
   private String name;

@@ -3,15 +3,20 @@ package pl.adrianwieczorek.xmlvisualeditorservice.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.hibernate.envers.AuditJoinTable;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table
+@Audited
 @Data
 @AllArgsConstructor
-public class User {
+public class User extends Auditable<String> {
+  private static final long serialVersionUID = -1113697813123896689L;
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
@@ -32,11 +37,12 @@ public class User {
   @Column
   private String lastname;
 
-  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
   @JoinTable(name = "USER_ROLES", joinColumns = {
           @JoinColumn(name = "USER_ID")}, inverseJoinColumns = {
           @JoinColumn(name = "ROLE_ID")})
-  private Set<Role> roles;
+  @AuditJoinTable
+  private Set<Role> roles = new HashSet<>();
 
   public User() {
 
