@@ -17,7 +17,7 @@ import java.io.*;
 @Slf4j
 @Service
 public class ExportXmlService {
-  private static final Integer PRETTY_STRING_FACTOR = 4;
+  private static final Integer EXPORT_PRETTY_STRING_FACTOR = 4;
 
   @Autowired
   private OutputXMLParser outputXMLParser;
@@ -29,7 +29,7 @@ public class ExportXmlService {
     log.info("EXPORT XML [xmlNodeDTO={}]", xmlNodeDTO.toString());
 
     ExportDTO exportDTO = new ExportDTO();
-    exportDTO.setXml(outputXMLParser.format(outputXMLParser.toXML(xmlNodeDTO), PRETTY_STRING_FACTOR));
+    exportDTO.setXml(outputXMLParser.format(outputXMLParser.toXML(xmlNodeDTO), EXPORT_PRETTY_STRING_FACTOR));
 
     log.info("RESULT [xml={}]", exportDTO.getXml());
 

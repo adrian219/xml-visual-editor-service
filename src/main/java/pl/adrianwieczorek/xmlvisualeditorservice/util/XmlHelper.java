@@ -20,6 +20,7 @@ import java.io.StringWriter;
 
 @Slf4j
 public class XmlHelper {
+  private static final Integer DEFAULT_PRETTY_STRING_FACTOR = 4;
 
   public Document toDocument(String xml) {
     if (Strings.isNullOrEmpty(xml)) {
@@ -61,5 +62,9 @@ public class XmlHelper {
       log.error(e.getMessage());
       return null;
     }
+  }
+
+  public String prettyFormat(String xml) {
+    return prettyFormat(xml, DEFAULT_PRETTY_STRING_FACTOR);
   }
 }
