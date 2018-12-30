@@ -48,9 +48,9 @@ public class OwnXMLService {
 
   public OwnXmlDTO save(OwnXmlDTO ownXML) {
     log.info("SAVE [id={}]", ownXML.getId());
-    OwnXml own = modelMapper.map(ownXML, OwnXml.class);
-    User user = userRepository.getOne(ownXML.getUserId());
-    own.setUser(user);
+    OwnXml own = ownXMLRepository.getOne(ownXML.getId());
+    own.setXml(ownXML.getXml());
+    log.info("JAKI ID? [id={}]", own.getId());
     return modelMapper.map(ownXMLRepository.save(own), OwnXmlDTO.class);
   }
 

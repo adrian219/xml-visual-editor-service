@@ -1,5 +1,6 @@
 package pl.adrianwieczorek.xmlvisualeditorservice.own.xml;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(RestAPIConstants.OWN_XMLS)
+@Slf4j
 public class OwnXMLController {
 
   @Autowired
@@ -18,7 +20,12 @@ public class OwnXMLController {
 
   @GetMapping
   public List<OwnXmlDTO> getXmls(@AuthenticationPrincipal UserDetails userDetails) {
-    return ownXMLService.findAllByUsername(userDetails.getUsername());
+    List<OwnXmlDTO> list = ownXMLService.findAllByUsername(userDetails.getUsername());
+    list.forEach(item -> {
+      log.info(item.toString());
+    });
+    log.info("COUNT: {}", list.size());
+    return list;
   }
 
   @PostMapping

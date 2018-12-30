@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.adrianwieczorek.xmlvisualeditorservice.authentication.JwtAuthenticationFilter;
-import pl.adrianwieczorek.xmlvisualeditorservice.mapper.OwnXmlDTOMapper;
 import pl.adrianwieczorek.xmlvisualeditorservice.mapper.OwnXmlMapper;
 import pl.adrianwieczorek.xmlvisualeditorservice.parser.InputXMLParser;
 import pl.adrianwieczorek.xmlvisualeditorservice.parser.OutputXMLParser;
@@ -48,9 +47,9 @@ public class BeanConfig {
   @Bean
   public ModelMapper modelMapper() {
     ModelMapper modelMapper = new ModelMapper();
+    modelMapper.getConfiguration().setAmbiguityIgnored(true);
 
     modelMapper.addMappings(new OwnXmlMapper());
-    modelMapper.addMappings(new OwnXmlDTOMapper());
 
     return modelMapper;
   }

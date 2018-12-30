@@ -12,7 +12,7 @@ public class Role extends Auditable<String> {
   private static final long serialVersionUID = -8444697813123556689L;
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column
