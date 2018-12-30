@@ -13,4 +13,5 @@ public interface RestAPIConstants {
   String CHECK_TAKEN = "/check-taken";
   String EMAIL = "/email";
   String USERNAME = "/username";
+  String XML = "/xml";
 }
