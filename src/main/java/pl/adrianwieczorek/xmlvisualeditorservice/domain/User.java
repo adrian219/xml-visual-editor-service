@@ -21,14 +21,14 @@ public class User extends Auditable<String> {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column
+  @Column(unique = true)
   private String username;
 
   @Column
   @JsonIgnore
   private String password;
 
-  @Column
+  @Column(unique = true)
   private String email;
 
   @Column

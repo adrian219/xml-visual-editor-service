@@ -36,20 +36,20 @@ public class AuthenticationController {
   public ResponseEntity<?> generateToken(@RequestBody UserDTO loginUser) throws AuthenticationException {
 
     //todo przeniesc do jakiego serwisu
-    User user = userRepository.findByUsername(loginUser.getUsername());
+    User user = userRepository.findByUsernameOrEmail(loginUser.getUsername(), loginUser.getUsername());
     if (user == null) {
-      log.warn("Invalid username or password [username={}]", loginUser.getUsername());
+      log.warn("Invalid username/email or password [username or email={}]", loginUser.getUsername());
       throw new InvalidUsernameOrPasswordException("Invalid username or password.");
     }
 
     if(!bcryptEncoder.matches(loginUser.getPassword(), user.getPassword())) {
-      log.warn("Invalid password [username={}]", loginUser.getUsername());
+      log.warn("Invalid password [username or email={}]", loginUser.getUsername());
       throw new InvalidUsernameOrPasswordException("Invalid username or password.");
     }
 
     final Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
-                    loginUser.getUsername(),
+                    user.getUsername(),
                     loginUser.getPassword()
             )
     );
