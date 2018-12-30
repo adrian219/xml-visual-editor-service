@@ -39,12 +39,12 @@ public class AuthenticationController {
     User user = userRepository.findByUsernameOrEmail(loginUser.getUsername(), loginUser.getUsername());
     if (user == null) {
       log.warn("Invalid username/email or password [username or email={}]", loginUser.getUsername());
-      throw new InvalidUsernameOrPasswordException("Invalid username or password.");
+      throw new InvalidUsernameOrPasswordException("Invalid username/email or password.");
     }
 
     if(!bcryptEncoder.matches(loginUser.getPassword(), user.getPassword())) {
       log.warn("Invalid password [username or email={}]", loginUser.getUsername());
-      throw new InvalidUsernameOrPasswordException("Invalid username or password.");
+      throw new InvalidUsernameOrPasswordException("Invalid username/email or password.");
     }
 
     final Authentication authentication = authenticationManager.authenticate(
