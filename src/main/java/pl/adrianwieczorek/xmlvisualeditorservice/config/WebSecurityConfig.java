@@ -61,6 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
             .antMatchers(RestAPIConstants.TOKEN + "/*").permitAll()
             .antMatchers(RestAPIConstants.USER + RestAPIConstants.SIGN_UP).permitAll()
+            .antMatchers(RestAPIConstants.CHECK_TAKEN + "/*").permitAll()
             .anyRequest().authenticated()
             .and()
             .logout()
