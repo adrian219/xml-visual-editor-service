@@ -20,12 +20,7 @@ public class OwnXMLController {
 
   @GetMapping
   public List<OwnXmlDTO> getXmls(@AuthenticationPrincipal UserDetails userDetails) {
-    List<OwnXmlDTO> list = ownXMLService.findAllByUsername(userDetails.getUsername());
-    list.forEach(item -> {
-      log.info(item.toString());
-    });
-    log.info("COUNT: {}", list.size());
-    return list;
+    return ownXMLService.findAllByUsername(userDetails.getUsername());
   }
 
   @PostMapping
