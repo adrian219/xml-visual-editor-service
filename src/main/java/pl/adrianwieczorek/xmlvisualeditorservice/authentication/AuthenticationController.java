@@ -1,5 +1,6 @@
 package pl.adrianwieczorek.xmlvisualeditorservice.authentication;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -7,6 +8,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import pl.adrianwieczorek.xmlvisualeditorservice.contant.RestAPIConstants;
 import pl.adrianwieczorek.xmlvisualeditorservice.domain.User;
@@ -15,6 +17,7 @@ import pl.adrianwieczorek.xmlvisualeditorservice.user.UserRepository;
 
 @RestController
 @RequestMapping(RestAPIConstants.TOKEN)
+@Slf4j
 public class AuthenticationController {
 
   @Autowired
@@ -26,8 +29,23 @@ public class AuthenticationController {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private BCryptPasswordEncoder bcryptEncoder;
+
   @PostMapping(RestAPIConstants.GENERATE)
-  public ResponseEntity<?> register(@RequestBody UserDTO loginUser) throws AuthenticationException {
+  public ResponseEntity<?> generateToken(@RequestBody UserDTO loginUser) throws AuthenticationException {
+
+    //todo przeniesc do jakiego serwisu
+    User user = userRepository.findByUsername(loginUser.getUsername());
+    if (user == null) {
+      log.warn("Invalid username or password [username={}]", loginUser.getUsername());
+      throw new InvalidUsernameOrPasswordException("Invalid username or password.");
+    }
+
+    if(!bcryptEncoder.matches(loginUser.getPassword(), user.getPassword())) {
+      log.warn("Invalid password [username={}]", loginUser.getUsername());
+      throw new InvalidUsernameOrPasswordException("Invalid username or password.");
+    }
 
     final Authentication authentication = authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
@@ -37,7 +55,7 @@ public class AuthenticationController {
     );
     SecurityContextHolder.getContext().setAuthentication(authentication);
     final String token = jwtTokenUtil.generateToken(authentication);
-    User user = userRepository.findByUsername(loginUser.getUsername());
+
     return ResponseEntity.ok(new AuthToken(user.getId(), user.getUsername(), null, user.getFirstname(), user.getLastname(), token));
   }
 }
