@@ -27,7 +27,7 @@ public class OwnXMLService {
 
   public List<OwnXmlDTO> findAllByUsername(String username) {
     log.info("FIND ALL BY USER [username={}]", username);
-    return ownXMLRepository.findAllByUser(userRepository.findByUsername(username)).stream()
+    return ownXMLRepository.findAllByUserOrderByLastModifiedDateDesc(userRepository.findByUsername(username)).stream()
             .map(entity -> modelMapper.map(entity, OwnXmlDTO.class))
             .collect(Collectors.toList());
   }
