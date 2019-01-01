@@ -1,5 +1,6 @@
 package pl.adrianwieczorek.xmlvisualeditorservice.importer;
 
+import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,10 @@ public class ImportController {
 
   @PostMapping
   public ImportDTO importer(@RequestBody String xml){
+    if(Strings.isNullOrEmpty(xml)) {
+      return null;
+    }
+
     return importXmlService.importXML(xml);
   }
 

@@ -14,6 +14,11 @@ public class OutputXMLParser {
 
   public String toXML(XmlNodeDTO xmlNodeDTO) {
     StringBuilder sb = new StringBuilder();
+
+    if(xmlNodeDTO == null) {
+      return "";
+    }
+
     return buildNode(sb, xmlNodeDTO);
   }
 

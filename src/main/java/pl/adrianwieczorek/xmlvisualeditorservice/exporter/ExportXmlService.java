@@ -26,7 +26,7 @@ public class ExportXmlService {
   private OwnXMLRepository ownXMLRepository;
 
   public ExportDTO exportXML(XmlNodeDTO xmlNodeDTO){
-    log.info("EXPORT XML [xmlNodeDTO={}]", xmlNodeDTO.toString());
+    log.info("EXPORT XML [xmlNodeDTO={}]", xmlNodeDTO);
 
     ExportDTO exportDTO = new ExportDTO();
     exportDTO.setXml(outputXMLParser.format(outputXMLParser.toXML(xmlNodeDTO), EXPORT_PRETTY_STRING_FACTOR));

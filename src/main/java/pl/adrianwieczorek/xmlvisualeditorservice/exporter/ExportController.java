@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.adrianwieczorek.xmlvisualeditorservice.contant.RestAPIConstants;
 import pl.adrianwieczorek.xmlvisualeditorservice.dto.ExportDTO;
-import pl.adrianwieczorek.xmlvisualeditorservice.dto.XmlNodeDTO;
+import pl.adrianwieczorek.xmlvisualeditorservice.dto.ExportRequestDTO;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -17,8 +17,12 @@ public class ExportController {
   private ExportXmlService exportXmlService;
 
   @PostMapping
-  public ExportDTO exporter(@RequestBody XmlNodeDTO xmlNodeDTO){
-    return exportXmlService.exportXML(xmlNodeDTO);
+  public ExportDTO exporter(@RequestBody ExportRequestDTO exportRequestDTO){
+    if(exportRequestDTO.getNode() == null) {
+      return null;
+    }
+
+    return exportXmlService.exportXML(exportRequestDTO.getNode());
   }
 
   @GetMapping(RestAPIConstants.XML + "/{id}")
