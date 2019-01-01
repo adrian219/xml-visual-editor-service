@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface OwnXMLRepository extends JpaRepository<OwnXml, Long> {
   List<OwnXml> findAllByUserOrderByLastModifiedDateDesc(User user);
+
+  Boolean existsByIdAndUser(Long id, User user);
 }

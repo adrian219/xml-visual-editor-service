@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.adrianwieczorek.xmlvisualeditorservice.authentication.JwtAuthenticationFilter;
+import pl.adrianwieczorek.xmlvisualeditorservice.authorization.OwnerXmlAuthorizationFilter;
+import pl.adrianwieczorek.xmlvisualeditorservice.authorization.SecurityOwnerXmlService;
 import pl.adrianwieczorek.xmlvisualeditorservice.mapper.OwnXmlMapper;
 import pl.adrianwieczorek.xmlvisualeditorservice.parser.InputXMLParser;
 import pl.adrianwieczorek.xmlvisualeditorservice.parser.OutputXMLParser;
@@ -18,6 +20,11 @@ public class BeanConfig {
   @Bean
   public XmlHelper xmlHelper() {
     return new XmlHelper();
+  }
+
+  @Bean
+  public SecurityOwnerXmlService securityOwnerXmlHelper() {
+    return new SecurityOwnerXmlService();
   }
 
   @Bean
@@ -38,6 +45,11 @@ public class BeanConfig {
   @Bean
   public JwtAuthenticationFilter authenticationTokenFilterBean() {
     return new JwtAuthenticationFilter();
+  }
+
+  @Bean
+  public OwnerXmlAuthorizationFilter ownerXmlAuthorizationFilter() {
+    return new OwnerXmlAuthorizationFilter();
   }
 
   @Bean

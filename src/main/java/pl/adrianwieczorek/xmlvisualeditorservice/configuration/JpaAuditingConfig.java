@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Configuration
 @EnableJpaAuditing
-public class JpaAuditingConfiguration implements AuditorAware<String> {
+public class JpaAuditingConfig implements AuditorAware<String> {
 
   @Override
   public Optional<String> getCurrentAuditor() {
