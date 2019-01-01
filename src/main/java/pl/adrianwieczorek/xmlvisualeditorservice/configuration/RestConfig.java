@@ -1,4 +1,4 @@
-package pl.adrianwieczorek.xmlvisualeditorservice.config;
+package pl.adrianwieczorek.xmlvisualeditorservice.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

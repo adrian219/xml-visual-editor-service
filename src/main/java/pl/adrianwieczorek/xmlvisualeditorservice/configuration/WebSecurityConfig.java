@@ -1,4 +1,4 @@
-package pl.adrianwieczorek.xmlvisualeditorservice.config;
+package pl.adrianwieczorek.xmlvisualeditorservice.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

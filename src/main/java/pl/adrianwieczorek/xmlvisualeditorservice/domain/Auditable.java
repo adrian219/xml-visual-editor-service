@@ -1,6 +1,7 @@
 package pl.adrianwieczorek.xmlvisualeditorservice.domain;
 
 import lombok.Data;
+import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @Data
+@Audited
 @EntityListeners(AuditingEntityListener.class)
 public class Auditable<U> {
   private static final long serialVersionUID = -5633697813123896689L;
