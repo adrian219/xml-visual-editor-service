@@ -1,5 +1,6 @@
 package pl.adrianwieczorek.xmlvisualeditorservice.validation;
 
+import com.google.common.base.Strings;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +19,16 @@ public class ValidationService {
     validationDTO.setXml(xml);
     Boolean check;
 
-    //checking validation
-    try {
-      check = validatorXml.check(validationDTO.getXml());
-    }catch(ValidationException e) {
-      validationDTO.setErrorMessage(e.getMessage());
-      check = false;
+    if(Strings.isNullOrEmpty(xml)) {
+      check = true;
+    } else {
+      //checking validation
+      try {
+        check = validatorXml.check(validationDTO.getXml());
+      }catch(ValidationException e) {
+        validationDTO.setErrorMessage(e.getMessage());
+        check = false;
+      }
     }
 
     validationDTO.setValidate(check);

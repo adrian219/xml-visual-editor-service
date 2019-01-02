@@ -13,7 +13,7 @@ public class ValidationXmlController {
   private ValidationService validationService;
 
   @PostMapping
-  public ValidationDTO check(@RequestBody String xml){
-    return validationService.validate(xml);
+  public ValidationDTO check(@RequestBody ValidationDTO dto){
+    return validationService.validate(dto.getXml());
   }
 }

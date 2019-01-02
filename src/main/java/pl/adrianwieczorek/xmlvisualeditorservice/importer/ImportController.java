@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import pl.adrianwieczorek.xmlvisualeditorservice.contant.RestAPIConstants;
 import pl.adrianwieczorek.xmlvisualeditorservice.dto.ImportDTO;
 import pl.adrianwieczorek.xmlvisualeditorservice.dto.ImportFileDTO;
+import pl.adrianwieczorek.xmlvisualeditorservice.dto.ImportRequestDTO;
 
 import java.io.IOException;
 
@@ -18,12 +19,12 @@ public class ImportController {
   private ImportXmlService importXmlService;
 
   @PostMapping
-  public ImportDTO importer(@RequestBody String xml){
-    if(Strings.isNullOrEmpty(xml)) {
+  public ImportDTO importer(@RequestBody ImportRequestDTO dto){
+    if(Strings.isNullOrEmpty(dto.getXml())) {
       return null;
     }
 
-    return importXmlService.importXML(xml);
+    return importXmlService.importXML(dto.getXml());
   }
 
   @PostMapping(RestAPIConstants.XML + "/{id}")

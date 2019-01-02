@@ -21,21 +21,21 @@ public class OwnerXmlAuthorizationFilter extends OncePerRequestFilter {
 
   @Override
   protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-    Long ownXmlId = getOwnXmlId(httpServletRequest.getServletPath());
+    Long ownXmlId = getOwnXmlId(httpServletRequest.getRequestURI());
 
     Boolean ifOwner = securityOwnerXmlService.checkIfOwnerXml(ownXmlId, httpServletRequest.getUserPrincipal().getName());
 
     if(!ifOwner) {
-      httpServletResponse.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied! You aren't owner for this xml [id=" + ownXmlId + "]");
-    } else {
-      filterChain.doFilter(httpServletRequest, httpServletResponse);
+      httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
     }
+
+    filterChain.doFilter(httpServletRequest, httpServletResponse);
   }
 
   @Override
   protected boolean shouldNotFilter(HttpServletRequest request) {
-    String path = request.getServletPath();
-    return !path.startsWith(RestAPIConstants.OWN_XMLS + "/");
+    String path = request.getRequestURI();
+    return !path.contains(RestAPIConstants.OWN_XMLS + "/");
   }
 
   private Long getOwnXmlId(String path) {

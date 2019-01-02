@@ -2,12 +2,16 @@ package pl.adrianwieczorek.xmlvisualeditorservice.configuration;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.servlet.DispatcherServlet;
 import pl.adrianwieczorek.xmlvisualeditorservice.authentication.JwtAuthenticationFilter;
 import pl.adrianwieczorek.xmlvisualeditorservice.authorization.OwnerXmlAuthorizationFilter;
 import pl.adrianwieczorek.xmlvisualeditorservice.authorization.SecurityOwnerXmlService;
+import pl.adrianwieczorek.xmlvisualeditorservice.logging.LoggingHttpServlet;
 import pl.adrianwieczorek.xmlvisualeditorservice.mapper.OwnXmlMapper;
 import pl.adrianwieczorek.xmlvisualeditorservice.parser.InputXMLParser;
 import pl.adrianwieczorek.xmlvisualeditorservice.parser.OutputXMLParser;
@@ -65,5 +69,15 @@ public class BeanConfig {
     modelMapper.addMappings(new OwnXmlMapper());
 
     return modelMapper;
+  }
+
+  @Bean
+  public ServletRegistrationBean dispatcherRegistration() {
+    return new ServletRegistrationBean(dispatcherServlet());
+  }
+
+  @Bean(name = DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_BEAN_NAME)
+  public DispatcherServlet dispatcherServlet() {
+    return new LoggingHttpServlet();
   }
 }
