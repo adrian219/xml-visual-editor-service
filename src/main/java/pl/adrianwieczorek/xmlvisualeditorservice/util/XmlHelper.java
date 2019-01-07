@@ -24,7 +24,7 @@ public class XmlHelper {
 
   public Document toDocument(String xml) {
     if (Strings.isNullOrEmpty(xml)) {
-      log.info("Xml is empty!");
+      log.warn("Xml is empty!");
       return null;
     } else {
       try {
